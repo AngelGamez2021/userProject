@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { EmpleadoService } from '../../services/empleado.service';
 
 @Component({
   selector: 'app-create-empleado',
@@ -9,8 +12,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CreateEmpleadoComponent implements OnInit {
   createEmpleado: FormGroup;
   submitted = false;
+  loading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private _empleadoService: EmpleadoService,
+    //este es para la conexion del servicio, modificar los servicios antes
+    private router: Router,
+    //nos sirve para la navegacion de angular 
+    private toastr: ToastrService
+    //estamos declarando esto para los estilos
+    ) {
     this.createEmpleado = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -37,7 +48,22 @@ export class CreateEmpleadoComponent implements OnInit {
       fechaCreacion: new Date(),
       fechaActualizacion: new Date()
     }
+    this.loading=true;
 
-    console.log(empleado);
+  this._empleadoService.agregarEmpleado(empleado).then(() => {
+    //aca agregamos a la base de datos de fire el empleado
+    this.toastr.success('El empleado ha sido registrado con exito!','Empleado registrado',{
+      positionClass: 'toast-bottom-right'	
+    })
+    //acá incluimos el mensaje de animacion
+
+    this.loading = false;
+
+    console.log('empleado resgistrado con exito!');
+    this.router.navigate(['/list-empleados'])
+  }).catch(error => {
+    console.log(error);
+    this.loading = false;
+  })
   }
 }

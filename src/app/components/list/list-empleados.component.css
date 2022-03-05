@@ -1,0 +1,18 @@
+#btadd {
+    float: right;
+}
+
+i {
+    cursor: pointer;
+}
+
+.card {
+    height: 450px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.table {
+    height: 100%;
+    position: relative;
+}

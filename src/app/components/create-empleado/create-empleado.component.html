@@ -3,9 +3,13 @@
         <div class="col-lg-6 offset-lg-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h3>Agregar Empleado</h3>
-                    <!-- TOCA CORREGIR QUE NO SALE EL MENSAJE ALERTA EN ROJO DE LLENAR TODOS LOS CAMOS -->
-                    <span *ngIf="submitted && createEmpleado.invalid" class="badge badge-danger">Todos los campos son obligatorios</span>
+                    <h3>Agregar Empleado
+                        <div *ngIf="loading" id="load" class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </h3>
+
+                    <span *ngIf="submitted && createEmpleado.invalid" id="span">Todos los campos son obligatorios</span>
 
                     <form class="mt-4" [formGroup]="createEmpleado" (ngSubmit)="agregarEmpleado()">
                         <div class="row">
@@ -16,8 +20,8 @@
                                 <input type="text" class="form-control form-control-lg" formControlName="apellido" placeholder="Apellido" />
                             </div>
                         </div>
-                        <input type="text" class="form-control form-control-lg mt-3" formControlName="documento" placeholder="Documento" />
-                        <input type="text" class="form-control form-control-lg mt-3" formControlName="salario" placeholder="Salario" />
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="documento" placeholder="Documento" />
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="salario" placeholder="Salario" />
 
                         <div class="mt-3">
                             <button type="text" class="btn btn-secondary btn-lg" style="margin: 10px" routerLink="/list-empleados">
